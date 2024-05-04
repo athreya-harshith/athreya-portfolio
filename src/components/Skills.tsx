@@ -1,5 +1,4 @@
 import { Flex, Text, Image } from "@chakra-ui/react";
-import React from "react";
 import cpp from "../assets/c-.png";
 import c from "../assets/letter-c.png";
 import java from "../assets/java.png";
