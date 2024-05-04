@@ -1,0 +1,35 @@
+.scroll-down {
+    left: calc(50% - 0.5rem);
+    bottom: 5vh;
+    display: block;
+    text-align: center;
+    font-size: 1.25rem; 
+    z-index: 100;
+    text-decoration: none;
+    text-shadow: 0;
+    width: 2rem;
+    height: 2rem;
+    border-bottom: 6px solid;
+    border-right: 6px solid;
+    transform: translate(-50%, 0%) rotate(45deg);
+    animation: fade_move_down 2s ease-in-out infinite;
+}
+.border-right {
+    border-right: 1px solid;
+    height: 20px;
+}
+@keyframes fade_move_down {
+    0% {
+        transform: translate(0, -10px) rotate(45deg);
+        opacity: 0
+    }
+
+    50% {
+        opacity: 1
+    }
+
+    100% {
+        transform: translate(0, 10px) rotate(45deg);
+        opacity: 0
+    }
+}
