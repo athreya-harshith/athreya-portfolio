@@ -76,7 +76,7 @@ const Experience = () => {
                         TechStack / Frameworks :
                       </Text>
                       <Text
-                        maxW={"90vw"}
+                        maxW={"70vw"}
                         fontSize={{ base: "xs", md: "md" }}
                         as={"i"}
                         pl={3}

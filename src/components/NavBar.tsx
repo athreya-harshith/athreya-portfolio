@@ -9,10 +9,8 @@ import {
   useColorModeValue,
   Stack,
   useColorMode,
-  Switch,
-  Text,
 } from "@chakra-ui/react";
-import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
+import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
 
 const NavLink = ({ children }: { children: ReactNode }) => (
   <Link
@@ -31,7 +29,7 @@ const NavLink = ({ children }: { children: ReactNode }) => (
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const { toggleColorMode } = useColorMode();
+  const { colorMode, toggleColorMode } = useColorMode();
   return (
     <>
       <Box
@@ -62,9 +60,14 @@ export default function NavBar() {
           </HStack>
 
           <Flex alignItems={"center"}>
-            <HStack mx={3}>
-              <Switch colorScheme="twitter" onChange={toggleColorMode} />
-              <Text>Toggle Mode</Text>
+            <HStack mx={3} onClick={toggleColorMode}>
+              {colorMode === "dark" ? (
+                <SunIcon />
+              ) : (
+                <MoonIcon color="gray.900" />
+              )}
+              {/* <Switch colorScheme="twitter" onChange={toggleColorMode} /> */}
+              {/* <Text>Toggle Mode</Text> */}
             </HStack>
             {/* <Menu>
               <MenuButton
