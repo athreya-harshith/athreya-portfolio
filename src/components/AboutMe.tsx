@@ -1,6 +1,6 @@
-import { Box, Flex, Image, Text } from "@chakra-ui/react";
+import { Box, Flex, Image, Link, Text } from "@chakra-ui/react";
 import { aboutMe } from "../data";
-import proPic from "../assets/recent.jpeg";
+import proPic from "../assets/recent.jpg";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLocationDot, faEnvelope } from "@fortawesome/free-solid-svg-icons";
 import {
@@ -47,10 +47,21 @@ const AboutMe = () => {
             <span>Bengaluru , India</span>
           </Text>
           <Flex my={3} gap={4} justifyContent={{ base: "center", md: "start" }}>
-            <FontAwesomeIcon icon={faGithub} size="xl" />
-            <FontAwesomeIcon icon={faLinkedin} size="xl" />
-            <FontAwesomeIcon icon={faInstagram} size="xl" />
-            <FontAwesomeIcon icon={faEnvelope} size="xl" />
+            <Link href={"https://github.com/athreya-harshith"} isExternal>
+              <FontAwesomeIcon icon={faGithub} size="xl" />
+            </Link>
+            <Link
+              href={"https://www.linkedin.com/in/harshith-athreya-652a78213/"}
+              isExternal
+            >
+              <FontAwesomeIcon icon={faLinkedin} size="xl" />
+            </Link>
+            <Link href={""} isExternal>
+              <FontAwesomeIcon icon={faInstagram} size="xl" />
+            </Link>
+            <Link href={""} isExternal>
+              <FontAwesomeIcon icon={faEnvelope} size="xl" />
+            </Link>
           </Flex>
         </Box>
       </Flex>

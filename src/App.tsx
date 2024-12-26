@@ -1,26 +1,22 @@
 import "./App.css";
-import AboutMe from "./components/AboutMe";
-import Experience from "./components/Experience";
-import Introduction from "./components/Introduction";
 import NavBar from "./components/NavBar";
-import Skills from "./components/Skills";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Projects from "./components/Projects";
+import Home from "./components/Home";
 import ContacForm from "./components/ContactForm";
+import Resources from "./components/Resources";
 function App() {
   return (
     <>
-      <NavBar />
-      <Introduction />
-      <AboutMe />
-      <Experience />
-      <Skills />
-      <ContacForm />
-      {/* <BrowserRouter>
+      <BrowserRouter>
+        <NavBar />
         <Routes>
-          <Route path="/" element={<Introduction />}></Route>
-          <Route path="/experience" element={<Experience />}></Route>
-          <Route path="/skills" element={<Skills />}></Route>
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/projects" element={<Projects />}></Route>
+          <Route path="/resources" element={<Resources />}></Route>
         </Routes>
-      </BrowserRouter> */}
+        <ContacForm />
+      </BrowserRouter>
     </>
   );
 }

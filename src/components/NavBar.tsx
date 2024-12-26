@@ -1,35 +1,63 @@
-import { ReactNode } from "react";
 import {
   Box,
-  Flex,
-  HStack,
-  Link,
   IconButton,
+  Stack,
+  HStack,
+  Flex,
   useDisclosure,
   useColorModeValue,
-  Stack,
   useColorMode,
+  Link as ChakraLink,
+  useBreakpointValue,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon, MoonIcon, SunIcon } from "@chakra-ui/icons";
+import { Link as RouterLink, useLocation } from "react-router-dom";
+import { FaDownload } from "react-icons/fa";
 
-const NavLink = ({ children }: { children: ReactNode }) => (
-  <Link
-    px={2}
-    py={1}
-    rounded={"md"}
-    _hover={{
-      textDecoration: "none",
-      bg: useColorModeValue("gray.200", "gray.700"),
-    }}
-    href={""}
-  >
-    {children}
-  </Link>
-);
+const NavLink = ({
+  to,
+  children,
+  onClick,
+}: {
+  to: string;
+  children: React.ReactNode;
+  onClick?: () => void;
+}) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
+  const activeColor = useColorModeValue("teal.500", "teal.300");
+  const inactiveColor = useColorModeValue("gray.600", "gray.400");
+
+  return (
+    <RouterLink to={to}>
+      <ChakraLink
+        px={2}
+        py={1}
+        rounded={"md"}
+        fontWeight={isActive ? "bold" : "normal"}
+        color={isActive ? activeColor : inactiveColor}
+        _hover={{
+          textDecoration: "none",
+          bg: useColorModeValue("gray.200", "gray.700"),
+        }}
+        onClick={onClick}
+      >
+        {children}
+      </ChakraLink>
+    </RouterLink>
+  );
+};
 
 export default function NavBar() {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const { colorMode, toggleColorMode } = useColorMode();
+
+  const showDownloadButton = useBreakpointValue({ base: false, md: true });
+
+  const resumeLink =
+    "https://github.com/athreya-harshith/athreya-portfolio/blob/master/src/assets/Athreya_Updated_Resume.pdf";
+
   return (
     <>
       <Box
@@ -37,6 +65,8 @@ export default function NavBar() {
         px={4}
         position={"sticky"}
         top={0}
+        zIndex={1000} // Ensure navbar is on top
+        boxShadow="lg" // Optional: Adds shadow for better visibility
       >
         <Flex h={16} alignItems={"center"} justifyContent={"space-between"}>
           <IconButton
@@ -53,53 +83,78 @@ export default function NavBar() {
               spacing={4}
               display={{ base: "none", md: "flex" }}
             >
-              <NavLink key={"home"}>Home</NavLink>
-              <NavLink key={"experience"}>Experience</NavLink>
-              <NavLink key={"skills"}> Skills</NavLink>
+              <NavLink to="/" onClick={onClose}>
+                Home
+              </NavLink>
+              <NavLink to="/projects" onClick={onClose}>
+                Projects
+              </NavLink>
+              <NavLink to="/resources" onClick={onClose}>
+                Resources
+              </NavLink>
             </HStack>
           </HStack>
 
+          {/* Right-aligned section (Download Resume and Theme Toggle) */}
           <Flex alignItems={"center"}>
+            {/* Desktop View: Download Resume Button */}
+            {showDownloadButton && (
+              <ChakraLink
+                as="a"
+                href={resumeLink}
+                download
+                _hover={{ textDecoration: "none", bg: "gray.200" }}
+              >
+                <IconButton
+                  icon={<FaDownload />}
+                  aria-label="Download Resume"
+                  size="lg"
+                  colorScheme="teal"
+                  variant="ghost"
+                />
+              </ChakraLink>
+            )}
+
+            {/* Theme Toggle Button */}
             <HStack mx={3} onClick={toggleColorMode}>
               {colorMode === "dark" ? (
                 <SunIcon />
               ) : (
                 <MoonIcon color="gray.900" />
               )}
-              {/* <Switch colorScheme="twitter" onChange={toggleColorMode} /> */}
-              {/* <Text>Toggle Mode</Text> */}
             </HStack>
-            {/* <Menu>
-              <MenuButton
-                as={Button}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                minW={0}
-              >
-                <Avatar
-                  size={"sm"}
-                  src={
-                    "https://images.unsplash.com/photo-1493666438817-866a91353ca9?ixlib=rb-0.3.5&q=80&fm=jpg&crop=faces&fit=crop&h=200&w=200&s=b616b2c5b373a80ffc9636ba24f7a4a9"
-                  }
-                />
-              </MenuButton>
-              <MenuList>
-                <MenuItem>Link 1</MenuItem>
-                <MenuItem>Link 2</MenuItem>
-                <MenuDivider />
-                <MenuItem>Link 3</MenuItem>
-              </MenuList>
-            </Menu> */}
           </Flex>
         </Flex>
 
+        {/* Mobile menu dropdown */}
         {isOpen ? (
           <Box pb={4} display={{ md: "none" }}>
-            <Stack as={"nav"} spacing={4}>
-              <NavLink key={"home"}>Home</NavLink>
-              <NavLink key={"home"}>Education</NavLink>
-              <NavLink key={"home"}>Projects</NavLink>
+            <Stack as={"nav"} spacing={4} align="flex-start">
+              <NavLink to="/" onClick={onClose}>
+                Home
+              </NavLink>
+              <NavLink to="/projects" onClick={onClose}>
+                Projects
+              </NavLink>
+              <NavLink to="/resources" onClick={onClose}>
+                Resources
+              </NavLink>
+              {/* Mobile View: Download Resume Button */}
+              <ChakraLink
+                as="a"
+                href={resumeLink}
+                download
+                _hover={{ textDecoration: "none", bg: "gray.200" }}
+              >
+                Resume
+                <IconButton
+                  icon={<FaDownload />}
+                  aria-label="Download Resume"
+                  size="lg"
+                  colorScheme="teal"
+                  variant="ghost"
+                />
+              </ChakraLink>
             </Stack>
           </Box>
         ) : null}

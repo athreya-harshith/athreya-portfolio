@@ -120,7 +120,7 @@ export default function ContacForm() {
                   />
                 </Link>
 
-                <Link href="https://www.linkedin.com/in/harshith-p-athreya-652a78213/">
+                <Link href="https://www.linkedin.com/in/harshith-athreya-652a78213/">
                   <IconButton
                     aria-label="linkedin"
                     variant="ghost"

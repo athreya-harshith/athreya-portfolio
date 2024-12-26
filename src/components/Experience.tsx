@@ -13,11 +13,13 @@ import {
   Box,
 } from "@chakra-ui/react";
 import { experience } from "../data";
+
 const Experience = () => {
   const { activeStep } = useSteps({
-    index: 2,
+    index: 3,
     count: experience.data.length,
   });
+
   return (
     <Flex
       mx={"auto"}
@@ -37,8 +39,11 @@ const Experience = () => {
             index={activeStep}
             zIndex={-1}
             orientation="vertical"
-            height={{ base: "550px", md: "400px" }}
             gap="0"
+            // Responsive height for Stepper
+            height={{ base: "auto", sm: "600px", md: "700px", lg: "800px" }}
+            minHeight="500px" // Minimum height for small screens
+            maxHeight="100%" // Ensure it doesn't stretch too much on large screens
           >
             {experience.data.map((step, index) => (
               <Step key={index}>
@@ -50,12 +55,13 @@ const Experience = () => {
                   />
                 </StepIndicator>
 
-                <Box flexShrink="0">
+                <Box flexShrink="0" w="full">
                   <StepTitle>{step.title}</StepTitle>
                   <Flex gap={1} flexDirection={"column"} flexWrap={"wrap"}>
                     <Flex
                       flexDirection={{ base: "column", md: "row" }}
                       gap={{ md: 3 }}
+                      w="full"
                     >
                       <Text fontWeight={"bold"}>{step.company}</Text>
                       <Flex gap={4} fontSize={"s"} alignItems={"center"}>
@@ -67,25 +73,37 @@ const Experience = () => {
                         </Text>
                       </Flex>
                     </Flex>
+
+                    {/* TechStack Section */}
                     <Flex
                       flexDirection={{ base: "column", md: "row" }}
                       gap={{ md: 3 }}
-                      flexWrap={"wrap"}
+                      w="full"
+                      alignItems="flex-start"
                     >
                       <Text fontSize={{ base: "xs", md: "md" }}>
-                        TechStack / Frameworks :
+                        TechStack / Frameworks:
                       </Text>
                       <Text
-                        maxW={"70vw"}
                         fontSize={{ base: "xs", md: "md" }}
                         as={"i"}
                         pl={3}
+                        wordBreak="break-word"
+                        maxW="80%" // Use maxW for better control over text wrapping
                       >
-                        {step.techStack}.
+                        {step.techStack}
                       </Text>
                     </Flex>
 
-                    <Text maxW={"70vw"}>{step.description}</Text>
+                    {/* Description Section */}
+                    <Text
+                      maxW="80%" // Adjusting width for better responsiveness
+                      fontSize={{ base: "xs", md: "md" }}
+                      mb={5}
+                      wordBreak="break-word" // Ensure the text breaks properly
+                    >
+                      {step.description}
+                    </Text>
                   </Flex>
                 </Box>
 
